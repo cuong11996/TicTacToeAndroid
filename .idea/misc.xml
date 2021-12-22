@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/TicTacToe/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/TicTacToe/app/src/main/res/layout/activity_email_login.xml" value="0.20520833333333333" />
+        <entry key="..\:/TicTacToe/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/TicTacToe/app/src/main/res/layout/activity_main2.xml" value="0.20520833333333333" />
+        <entry key="..\:/TicTacToe/app/src/main/res/layout/activity_register.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>
