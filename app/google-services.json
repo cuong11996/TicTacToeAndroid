@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "642135848928",
+    "project_id": "androidfinal-c88c8",
+    "storage_bucket": "androidfinal-c88c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642135848928:android:7f898433ee6ec3e7e01d85",
+        "android_client_info": {
+          "package_name": "com.rmit.tictactoe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642135848928-7ujjaec42fpfoqtmv5a2tb7oagf30p0k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc8Zi9DuuORkQk3qR9rPyaPP1WoibwD3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642135848928-7ujjaec42fpfoqtmv5a2tb7oagf30p0k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
