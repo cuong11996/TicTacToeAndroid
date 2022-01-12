@@ -65,7 +65,7 @@
                     android:id="@+id/xWinNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text=""
                     android:textSize="24sp" />
 
                 <TextView
@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:text="12"
+                    android:text=""
                     android:textSize="24sp" />
 
                 <TextView
@@ -166,7 +166,7 @@
                     android:id="@+id/yWinNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2"
+                    android:text=""
                     android:textSize="24sp" />
 
                 <TextView
@@ -189,7 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:text="10"
+                    android:text=""
                     android:textSize="24sp" />
 
                 <TextView
@@ -346,6 +346,8 @@
             android:layout_marginEnd="60dp"
             android:layout_marginStart="60dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/buttonBackgroundColor"
+            android:elevation="@dimen/cardview_default_elevation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -363,6 +365,7 @@
                     android:layout_height="wrap_content"
                     android:text="You"
                     android:textSize="36sp"
+                    android:textColor="@color/textColor"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -370,6 +373,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lost"
+                    android:textColor="@color/textColor"
                     android:layout_marginStart="7dp"
                     android:textSize="36sp"
                     android:textStyle="bold"/>
@@ -386,6 +390,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="12"
+                    android:textColor="@color/textColor"
                     android:layout_gravity="center"
                     android:textSize="28sp" />
 
@@ -393,6 +398,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Turns"
+                    android:textColor="@color/textColor"
                     android:layout_gravity="center"
                     android:layout_marginStart="7dp"
                     android:textSize="28sp" />
@@ -412,7 +418,8 @@
                     android:id="@+id/updatedWinNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text=""
+                    android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
                 <TextView
@@ -420,6 +427,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="W"
+                    android:textColor="@color/textColor"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -428,6 +436,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:text="-"
+                    android:textColor="@color/textColor"
                     android:textSize="30sp" />
 
                 <TextView
@@ -435,7 +444,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:text="13"
+                    android:text=""
+                    android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
                 <TextView
@@ -443,6 +453,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="L"
+                    android:textColor="@color/textColor"
                     android:textSize="24sp"
                     android:textStyle="bold" />
             </LinearLayout>
