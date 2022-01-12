@@ -47,6 +47,36 @@ public class MainMenuActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     @Override
+    protected void onResume(){
+        super.onResume();
+        //get data of user from database to display
+        DocumentReference docRef = db.collection("users").document(mAuth.getCurrentUser().getEmail());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("Check get data", "DocumentSnapshot data: " + document.getData());
+                        String fullName = (String) Objects.requireNonNull(document.get("fullName")).toString();
+                        usernameTxt.setText(fullName);
+                        int age = Integer.parseInt((String) document.get("age"));
+                        int matchNo = Integer.parseInt((String) document.get("matchNo"));
+                        matchNoTxt.setText(Integer.toString(matchNo));
+                        int winNo = Integer.parseInt((String) document.get("winNo"));
+                        winNoTxt.setText(Integer.toString(winNo));
+                        loseNoTxt.setText(Integer.toString (matchNo-winNo));
+                        user = new User(fullName,age,matchNo,winNo);
+                    } else {
+                        Log.d("Check get data", "No such document");
+                    }
+                } else {
+                    Log.d("Check get data", "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
