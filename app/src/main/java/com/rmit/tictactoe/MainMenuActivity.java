@@ -106,6 +106,11 @@ public class MainMenuActivity extends AppCompatActivity {
                                 if (!playerX.equals("") && playerY.equals("") && !playerX.equals(mAuth.getCurrentUser().getEmail())){
                                     DocumentReference roomDocument = document.getReference();
                                     roomDocument.update("playerY",mAuth.getCurrentUser().getEmail());
+                                    Intent intent = new Intent(MainMenuActivity.this,GamePlay.class);
+                                    intent.putExtra("roomId",roomDocument.getId());
+                                    intent.putExtra("xEmail",playerX);
+                                    intent.putExtra("yEmail",playerY);
+                                    startActivity(intent);
 //                                    setVisible(R.id.findMatchBtn,false);
 //                                    setVisible(R.id.confirmField,true);
 
