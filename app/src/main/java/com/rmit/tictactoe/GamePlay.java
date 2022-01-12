@@ -322,6 +322,13 @@ public class GamePlay extends AppCompatActivity {
         TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
         TextView updatedWinNo = findViewById(R.id.updatedWinNo);
 
+        TextView turnNo = findViewById(R.id.turnNo);
+        int sum = 0;
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+                sum += Math.abs(arr[i][j]);
+        turnNo.setText(sum + "");
+
         if (role == PLAYER_X) {
             if (winner == DRAW) {}
             else if (winner != PLAYER_X) xLoseNoNumber += 1;
