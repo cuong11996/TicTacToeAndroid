@@ -85,14 +85,14 @@ public class GamePlay extends AppCompatActivity {
                 }
 
                 if (snapshot != null && snapshot.exists()) {
-                    Log.i(TAG, "Receive updates");
                     Map<String, Object> currentData = snapshot.getData();
+                    Log.i(TAG, "Receive updates " + currentData);
 
                     long[][] newArr = firebaseFlattenedTo2D((ArrayList<Long>) Objects.requireNonNull(currentData.get("game")));
                     String newYEmail = (String) currentData.get("yEmail");
                     Log.i(TAG, "Received new YEmail " + newYEmail);
 
-                    if (newYEmail.isEmpty() || newYEmail == null) {
+                    if (newYEmail == null || newYEmail.isEmpty()) {
                         return;
                     }
 
