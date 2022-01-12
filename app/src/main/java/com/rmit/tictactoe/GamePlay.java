@@ -112,7 +112,12 @@ public class GamePlay extends AppCompatActivity {
             });
         }
 
-        ((ImageView) findViewById(R.id.homeIcon)).setOnClickListener(v -> finish());
+        ((ImageView) findViewById(R.id.homeIcon)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         setVisible(R.id.popUpResult,false);
 
@@ -464,8 +469,8 @@ public class GamePlay extends AppCompatActivity {
             }
         }
 
+        roomRef.delete();
         finish();
-        startActivity(getIntent());
     }
 
 }
