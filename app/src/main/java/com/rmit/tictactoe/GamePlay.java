@@ -57,6 +57,15 @@ public class GamePlay extends AppCompatActivity {
     static String xEmail = "";
     static String yEmail = "";
 
+    public void setVisible(int id , boolean isVisible){
+        View aview = findViewById(id);
+        if (isVisible){
+            aview.setVisibility(View.VISIBLE);
+        }
+        else {
+            aview.setVisibility(View.INVISIBLE);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +80,8 @@ public class GamePlay extends AppCompatActivity {
         xEmail = intent.getStringExtra("xEmail");
         yEmail = intent.getStringExtra("yEmail");
         role = yEmail.isEmpty() ? PLAYER_X : PLAYER_O;
+
+        setVisible(R.id.popUpResult,false);
 
         isTurn = role == PLAYER_X;
         Log.i(TAG, xEmail + " " + yEmail + " " + role);
@@ -242,12 +253,49 @@ public class GamePlay extends AppCompatActivity {
     }
 
 
+    private void updateInfo(boolean isLose){
+        TextView xWinNo = findViewById(R.id.xWinNo);
+        TextView yWinNo = findViewById(R.id.yWinNo);
+        TextView xLoseNo = findViewById(R.id.xLoseNo);
+        TextView yLoseNo = findViewById(R.id.yLoseNo);
+        if (role == PLAYER_X) {
+           if (isLose){
+               int loseNo = Integer.parseInt(xLoseNo.getText().toString())+1;
+               TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
+               updatedLoseNo.setText(loseNo);
+           }
+           else{
+               int winNo = Integer.parseInt(xWinNo.getText().toString())+1;
+               TextView updatedLoseNo = findViewById(R.id.updatedWinNo);
+               updatedLoseNo.setText(winNo);
+           }
+        }
+        if (role == PLAYER_O) {
+            if (isLose){
+                int loseNo = Integer.parseInt(yLoseNo.getText().toString())+1;
+                TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
+                updatedLoseNo.setText(loseNo);
+            }
+            else{
+                int winNo = Integer.parseInt(yWinNo.getText().toString())+1;
+                TextView updatedLoseNo = findViewById(R.id.updatedWinNo);
+                updatedLoseNo.setText(winNo);
+            }
+        }
+        setVisible(R.id.popUpResult,true);
+    }
     private void handleLose() {
+        TextView gameResultTxt = findViewById(R.id.gameResultTxt);
+        gameResultTxt.setText("lost");
+        updateInfo(true);
         Toast.makeText(this, "You lost!", Toast.LENGTH_LONG).show();
     }
 
 
     private void handleWin() {
+        TextView gameResultTxt = findViewById(R.id.gameResultTxt);
+        gameResultTxt.setText("win");
+        updateInfo(false);
         Toast.makeText(this, "You won!", Toast.LENGTH_LONG).show();
     }
 

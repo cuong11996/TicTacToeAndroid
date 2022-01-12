@@ -180,7 +180,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 });
     }
 
-    private void setVisible(int id , boolean isVisible){
+    public void setVisible(int id , boolean isVisible){
         View aview = findViewById(id);
         if (isVisible){
             aview.setVisibility(View.VISIBLE);
