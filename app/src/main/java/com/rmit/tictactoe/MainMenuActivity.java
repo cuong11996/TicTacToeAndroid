@@ -110,7 +110,7 @@ public class MainMenuActivity extends AppCompatActivity {
                                     Intent intent = new Intent(MainMenuActivity.this,GamePlay.class);
                                     intent.putExtra("roomId",roomDocument.getId());
                                     intent.putExtra("xEmail",playerX);
-                                    intent.putExtra("yEmail",playerY);
+                                    intent.putExtra("yEmail",mAuth.getCurrentUser().getEmail());
                                     startActivity(intent);
                                     isChangedActivity = true;
                                     break;
