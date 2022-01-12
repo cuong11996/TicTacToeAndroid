@@ -79,7 +79,7 @@ public class GamePlay extends AppCompatActivity {
         roomRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
-                if (error != null || yEmail.isEmpty()) {
+                if (error != null) {
                     Log.w(TAG, "Listen failed.", error);
                     return;
                 }
@@ -95,6 +95,7 @@ public class GamePlay extends AppCompatActivity {
                         return;
                     }
 
+                    yEmail = newYEmail;
                     db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -132,8 +133,6 @@ public class GamePlay extends AppCompatActivity {
                         }
                     });
 
-
-                    yEmail = newYEmail;
                     // TODO: Update user data
 
                     for (int i = 0; i < SIZE; i++) {
