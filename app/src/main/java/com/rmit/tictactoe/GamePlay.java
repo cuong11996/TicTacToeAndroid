@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.ipsec.ike.exceptions.IkeNetworkLostException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -101,7 +102,17 @@ public class GamePlay extends AppCompatActivity {
 
                     long[][] newArr = firebaseFlattenedTo2D((ArrayList<Long>) Objects.requireNonNull(currentData.get("game")));
                     String newYEmail = (String) currentData.get("playerY");
+                    String newXEmail = (String) currentData.get("playerX");
                     Log.i(TAG, "Received new YEmail " + newYEmail);
+
+                    // I'm X, Y has quit
+                    if (role == PLAYER_X && (!yEmail.isEmpty() && newYEmail != null && newYEmail.isEmpty())) {
+                        handleWin();
+                    }
+
+                    if (role == PLAYER_O && (newXEmail != null && newXEmail.isEmpty())) {
+                        handleWin();
+                    }
 
                     if (newYEmail == null || newYEmail.isEmpty()) {
                         return;
@@ -255,35 +266,51 @@ public class GamePlay extends AppCompatActivity {
 
     private void updateInfo(boolean isLose){
         TextView xWinNo = findViewById(R.id.xWinNo);
-        TextView yWinNo = findViewById(R.id.yWinNo);
         TextView xLoseNo = findViewById(R.id.xLoseNo);
+        int xWinNoNumber = Integer.parseInt(xWinNo.getText().toString())+1;
+        int xLoseNoNumber = Integer.parseInt(xLoseNo.getText().toString())+1;
+
+        TextView yWinNo = findViewById(R.id.yWinNo);
         TextView yLoseNo = findViewById(R.id.yLoseNo);
+        int yWinNoNumber = Integer.parseInt(yWinNo.getText().toString())+1;
+        int yLoseNoNumber = Integer.parseInt(yLoseNo.getText().toString())+1;
+        String userEmail = role == PLAYER_X ? xEmail : yEmail;
+        DocumentReference userDocumentRef = db.collection("users").document(userEmail);
+
         if (role == PLAYER_X) {
            if (isLose){
-               int loseNo = Integer.parseInt(xLoseNo.getText().toString())+1;
+               xLoseNoNumber += 1;
                TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
-               updatedLoseNo.setText(loseNo);
+               updatedLoseNo.setText(Integer.toString(xLoseNoNumber));
            }
            else{
-               int winNo = Integer.parseInt(xWinNo.getText().toString())+1;
+               xWinNoNumber += 1;
                TextView updatedLoseNo = findViewById(R.id.updatedWinNo);
-               updatedLoseNo.setText(winNo);
+               updatedLoseNo.setText(Integer.toString(xWinNoNumber));
            }
+
+           userDocumentRef.update("matchNo", (xLoseNoNumber + xWinNoNumber) + "");
+           userDocumentRef.update("winNo", xWinNoNumber + "");
         }
-        if (role == PLAYER_O) {
+        else {
             if (isLose){
-                int loseNo = Integer.parseInt(yLoseNo.getText().toString())+1;
+                yLoseNoNumber += 1;
                 TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
-                updatedLoseNo.setText(loseNo);
+                updatedLoseNo.setText(Integer.toString(yLoseNoNumber));
             }
             else{
-                int winNo = Integer.parseInt(yWinNo.getText().toString())+1;
+                yWinNoNumber += 1;
                 TextView updatedLoseNo = findViewById(R.id.updatedWinNo);
-                updatedLoseNo.setText(winNo);
+                updatedLoseNo.setText(Integer.toString(yWinNoNumber));
             }
+
+            userDocumentRef.update("matchNo", (yLoseNoNumber + yWinNoNumber) + "");
+            userDocumentRef.update("winNo", yWinNoNumber + "");
         }
+
         setVisible(R.id.popUpResult,true);
     }
+
     private void handleLose() {
         TextView gameResultTxt = findViewById(R.id.gameResultTxt);
         gameResultTxt.setText("lost");
@@ -297,6 +324,7 @@ public class GamePlay extends AppCompatActivity {
         gameResultTxt.setText("win");
         updateInfo(false);
         Toast.makeText(this, "You won!", Toast.LENGTH_LONG).show();
+        roomRef.delete();
     }
 
 
