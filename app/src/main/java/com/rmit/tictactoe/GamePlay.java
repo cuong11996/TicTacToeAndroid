@@ -370,7 +370,7 @@ public class GamePlay extends AppCompatActivity {
         updateInfo((int) role);
         Toast.makeText(this, "You won!", Toast.LENGTH_LONG).show();
         TextView updatedWinNo = findViewById(R.id.updatedWinNo);
-        updatedWinNo.setTextColor(getResources().getColor(R.color.design_default_color_error));
+        updatedWinNo.setTextColor(getResources().getColor(R.color.teal_200));
         roomRef.delete();
     }
 
