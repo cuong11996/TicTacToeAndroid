@@ -104,43 +104,36 @@ public class MainMenuActivity extends AppCompatActivity {
                                 String playerX = (String) document.get("playerX");
                                 String playerY = (String) document.get("playerY");
                                 if (!playerX.equals("") && playerY.equals("") && !playerX.equals(mAuth.getCurrentUser().getEmail())){
-                                    setVisible(R.id.findMatchBtn,false);
-                                    setVisible(R.id.confirmField,true);
+                                    DocumentReference roomDocument = document.getReference();
+                                    roomDocument.update("playerY",mAuth.getCurrentUser().getEmail());
+//                                    setVisible(R.id.findMatchBtn,false);
+//                                    setVisible(R.id.confirmField,true);
 
-                                    Button acceptBtn = findViewById(R.id.acceptBtn);
-                                    acceptBtn.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            DocumentReference roomDocument = document.getReference();
-                                            roomDocument.update("playerY",mAuth.getCurrentUser().getEmail());
-                                            Intent intent = new Intent(MainMenuActivity.this,GamePlay.class);
-                                            intent.putExtra("roomId",roomDocument.getId());
-                                            intent.putExtra("xEmail",playerX);
-                                            intent.putExtra("yEmail",playerY);
-                                            startActivity(intent);
-                                        }
-                                    });
-
-                                    Button declineBtn = findViewById(R.id.declineBtn);
-                                    declineBtn.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            setVisible(R.id.findMatchBtn,true);
-                                            setVisible(R.id.confirmField,false);
-                                        }
-                                    });
-                                    break;
+//                                    Button acceptBtn = findViewById(R.id.acceptBtn);
+//                                    acceptBtn.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            DocumentReference roomDocument = document.getReference();
+//                                            roomDocument.update("playerY",mAuth.getCurrentUser().getEmail());
+//                                            Intent intent = new Intent(MainMenuActivity.this,GamePlay.class);
+//                                            intent.putExtra("roomId",roomDocument.getId());
+//                                            intent.putExtra("xEmail",playerX);
+//                                            intent.putExtra("yEmail",playerY);
+//                                            startActivity(intent);
+//                                        }
+//                                    });
+//
+//                                    Button declineBtn = findViewById(R.id.declineBtn);
+//                                    declineBtn.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            setVisible(R.id.findMatchBtn,true);
+//                                            setVisible(R.id.confirmField,false);
+//                                        }
+//                                    });
                                 }
                             }
-                            String roomID = addRoom();
-                            if (!roomID.equals("")) {
-                                Intent intent = new Intent(MainMenuActivity.this, GamePlay.class);
-                                intent.putExtra("roomId", roomID);
-                                intent.putExtra("xEmail",mAuth.getCurrentUser().getEmail());
-                                intent.putExtra("yEmail","");
-                                startActivity(intent);
-                            }
-                            else Toast.makeText(MainMenuActivity.this,"Can not create room for you",Toast.LENGTH_SHORT).show();
+                            addRoom();
                         }
                     }
                 });
@@ -148,24 +141,27 @@ public class MainMenuActivity extends AppCompatActivity {
         });
     }
 
-    public String addRoom(){
+    public void addRoom(){
         Map<String, Object> data = new HashMap<>();
         ArrayList<Integer> game = new ArrayList<>();
-        for (int i = 0;i< 9;i++){
+        for (int i = 0;i < 9;i++){
             game.add(0);
         }
         data.put("game", game);
         data.put("playerX", mAuth.getCurrentUser().getEmail());
         data.put("playerY","");
 
-        final String[] roomID = {""};
         db.collection("rooms")
                 .add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("Add room", "DocumentSnapshot written with ID: " + documentReference.getId());
-                        roomID[0] = documentReference.getId();
+                        Intent intent = new Intent(MainMenuActivity.this, GamePlay.class);
+                        intent.putExtra("roomId", documentReference.getId());
+                        intent.putExtra("xEmail",mAuth.getCurrentUser().getEmail());
+                        intent.putExtra("yEmail","");
+                        startActivity(intent);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -174,7 +170,6 @@ public class MainMenuActivity extends AppCompatActivity {
                         Log.w("Add room", "Error adding document", e);
                     }
                 });
-        return roomID[0];
     }
 
     private void setVisible(int id , boolean isVisible){
