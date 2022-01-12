@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/usernameTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="......"
@@ -52,7 +52,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/matchNoTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/winNoTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -81,7 +81,6 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -100,7 +99,7 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/loseNoTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
