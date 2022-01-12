@@ -63,20 +63,21 @@ public class GamePlay extends AppCompatActivity {
 
         for (long[] row: arr) Arrays.fill(row, 0);
 
+        // Extract data from intent
         Intent intent = getIntent();
         roomId = intent.getStringExtra("roomId");
         xEmail = intent.getStringExtra("xEmail");
         yEmail = intent.getStringExtra("yEmail");
-        role = intent.getBooleanExtra("isX", false) ? PLAYER_X : PLAYER_O;
+        role = yEmail.isEmpty() ? PLAYER_X : PLAYER_O;
 
         isTurn = role == PLAYER_X;
+        Log.i(TAG, xEmail + " " + yEmail + " " + role);
 
-        // TODO: Extract data from intent
         roomRef = db.collection("rooms").document(roomId);
         roomRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
+                if (error != null || yEmail.isEmpty()) {
                     Log.w(TAG, "Listen failed.", error);
                     return;
                 }
@@ -86,6 +87,14 @@ public class GamePlay extends AppCompatActivity {
                     Map<String, Object> currentData = snapshot.getData();
 
                     long[][] newArr = firebaseFlattenedTo2D((ArrayList<Long>) Objects.requireNonNull(currentData.get("game")));
+                    String newYEmail = (String) currentData.get("yEmail");
+
+                    if (newYEmail == null) {
+                        return;
+                    }
+
+                    yEmail = newYEmail;
+                    // TODO: Update user data
 
                     for (int i = 0; i < SIZE; i++) {
                         for (int j = 0; j < SIZE; j++) {
@@ -120,6 +129,11 @@ public class GamePlay extends AppCompatActivity {
 
     private void handleCellClick(View v) {
         try {
+            if (yEmail.isEmpty()) {
+                Toast.makeText(GamePlay.this, "The other player has not entered", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             if (!isTurn) {
                 Toast.makeText(GamePlay.this, "This is not your turn", Toast.LENGTH_LONG).show();
                 return;
