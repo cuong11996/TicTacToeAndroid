@@ -268,7 +268,7 @@ public class GamePlay extends AppCompatActivity {
     }
 
 
-    private void updateInfo(boolean isLose){
+    private void updateInfo(int winner) {
 
         TextView xWinNo = findViewById(R.id.xWinNo);
         TextView xLoseNo = findViewById(R.id.xLoseNo);
@@ -282,25 +282,27 @@ public class GamePlay extends AppCompatActivity {
         String userEmail = role == PLAYER_X ? xEmail : yEmail;
         DocumentReference userDocumentRef = db.collection("users").document(userEmail);
 
+        TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
+        TextView updatedWinNo = findViewById(R.id.updatedWinNo);
+
         if (role == PLAYER_X) {
-           if (isLose) xLoseNoNumber += 1;
-           else xWinNoNumber += 1;
+            if (winner == DRAW) {}
+            else if (winner != PLAYER_X) xLoseNoNumber += 1;
+            else xWinNoNumber += 1;
 
-           TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
-           updatedLoseNo.setText(Integer.toString(xLoseNoNumber));
-           TextView updatedWinNo = findViewById(R.id.updatedWinNo);
-           updatedWinNo.setText(Integer.toString(xWinNoNumber));
 
-           userDocumentRef.update("matchNo", (xLoseNoNumber + xWinNoNumber) + "");
-           userDocumentRef.update("winNo", xWinNoNumber + "");
+            updatedLoseNo.setText(Integer.toString(xLoseNoNumber));
+            updatedWinNo.setText(Integer.toString(xWinNoNumber));
+
+            userDocumentRef.update("matchNo", (xLoseNoNumber + xWinNoNumber) + "");
+            userDocumentRef.update("winNo", xWinNoNumber + "");
         }
         else {
-            if (isLose) yLoseNoNumber += 1;
+            if (winner == DRAW) {}
+            else if (winner != PLAYER_O) yLoseNoNumber += 1;
             else yWinNoNumber += 1;
 
-            TextView updatedWinNo = findViewById(R.id.updatedWinNo);
             updatedWinNo.setText(Integer.toString(yWinNoNumber));
-            TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
             updatedLoseNo.setText(Integer.toString(yLoseNoNumber));
 
             userDocumentRef.update("matchNo", (yLoseNoNumber + yWinNoNumber) + "");
@@ -314,7 +316,7 @@ public class GamePlay extends AppCompatActivity {
     private void handleDraw() {
         TextView gameResultTxt = findViewById(R.id.gameResultTxt);
         gameResultTxt.setText("draw");
-        updateInfo(true);
+        updateInfo(DRAW);
         Toast.makeText(this, "You both won!", Toast.LENGTH_LONG).show();
         if (role == PLAYER_X) roomRef.delete();
     }
@@ -323,7 +325,7 @@ public class GamePlay extends AppCompatActivity {
     private void handleLose() {
         TextView gameResultTxt = findViewById(R.id.gameResultTxt);
         gameResultTxt.setText("lost");
-        updateInfo(true);
+        updateInfo((int) -role);
         Toast.makeText(this, "You lost!", Toast.LENGTH_LONG).show();
     }
 
@@ -331,7 +333,7 @@ public class GamePlay extends AppCompatActivity {
     private void handleWin() {
         TextView gameResultTxt = findViewById(R.id.gameResultTxt);
         gameResultTxt.setText("win");
-        updateInfo(false);
+        updateInfo((int) role);
         Toast.makeText(this, "You won!", Toast.LENGTH_LONG).show();
         roomRef.delete();
     }
