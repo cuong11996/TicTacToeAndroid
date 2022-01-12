@@ -17,12 +17,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         emailLogin = (Button) findViewById(R.id.emailLogin);
-        emailLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(MainActivity.this, EmailLoginActivity.class);
-                startActivity(i);
-            }
+        emailLogin.setOnClickListener(v -> {
+            Intent i =  new Intent(MainActivity.this, EmailLoginActivity.class);
+            startActivity(i);
         });
 
     }

@@ -91,7 +91,5 @@ public class EmailLoginActivity extends AppCompatActivity {
                 });
             }
         });
-
-
     }
 }
