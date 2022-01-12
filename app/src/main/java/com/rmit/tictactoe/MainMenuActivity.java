@@ -100,6 +100,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            boolean isChangedActivity = false;
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String playerX = (String) document.get("playerX");
                                 String playerY = (String) document.get("playerY");
@@ -111,6 +112,8 @@ public class MainMenuActivity extends AppCompatActivity {
                                     intent.putExtra("xEmail",playerX);
                                     intent.putExtra("yEmail",playerY);
                                     startActivity(intent);
+                                    isChangedActivity = true;
+                                    break;
 //                                    setVisible(R.id.findMatchBtn,false);
 //                                    setVisible(R.id.confirmField,true);
 
@@ -138,7 +141,7 @@ public class MainMenuActivity extends AppCompatActivity {
 //                                    });
                                 }
                             }
-                            addRoom();
+                            if(!isChangedActivity)  addRoom();
                         }
                     }
                 });
