@@ -89,7 +89,7 @@ public class GamePlay extends AppCompatActivity {
                     Log.i(TAG, "Receive updates " + currentData);
 
                     long[][] newArr = firebaseFlattenedTo2D((ArrayList<Long>) Objects.requireNonNull(currentData.get("game")));
-                    String newYEmail = (String) currentData.get("yEmail");
+                    String newYEmail = (String) currentData.get("playerY");
                     Log.i(TAG, "Received new YEmail " + newYEmail);
 
                     if (newYEmail == null || newYEmail.isEmpty()) {
