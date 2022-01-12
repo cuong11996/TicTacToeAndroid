@@ -92,8 +92,7 @@ public class GamePlay extends AppCompatActivity {
                     String newYEmail = (String) currentData.get("yEmail");
                     Log.i(TAG, "Received new YEmail " + newYEmail);
 
-                    assert newYEmail != null;
-                    if (newYEmail.isEmpty()) {
+                    if (newYEmail.isEmpty() || newYEmail == null) {
                         return;
                     }
 
