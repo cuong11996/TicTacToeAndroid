@@ -113,7 +113,7 @@ public class GamePlay extends AppCompatActivity {
                                         TextView xWinNoText = (TextView) findViewById(R.id.xWinNo);
                                         TextView xLostNoText = (TextView) findViewById(R.id.xLoseNo);
                                         xWinNoText.setText(xWinNo);
-                                        xLostNoText.setText(xLostNo);
+                                        xLostNoText.setText(Integer.toString(xLostNo));
                                     }
 
                                     if (document.getId().equals(yEmail)) {
@@ -127,7 +127,7 @@ public class GamePlay extends AppCompatActivity {
                                         TextView yWinNoText = (TextView) findViewById(R.id.yWinNo);
                                         TextView yLostNoText = (TextView) findViewById(R.id.yLoseNo);
                                         yWinNoText.setText(yWinNo);
-                                        yLostNoText.setText(yLostNo);
+                                        yLostNoText.setText(Integer.toString(yLostNo));
                                     }
                                 }
                             } else {
