@@ -408,13 +408,13 @@ public class GamePlay extends AppCompatActivity {
 
             TextView xWinNo = findViewById(R.id.xWinNo);
             TextView xLoseNo = findViewById(R.id.xLoseNo);
-            int xWinNoNumber = Integer.parseInt(xWinNo.getText().toString())+1;
-            int xLoseNoNumber = Integer.parseInt(xLoseNo.getText().toString())+1;
+            int xWinNoNumber = Integer.parseInt(xWinNo.getText().toString());
+            int xLoseNoNumber = Integer.parseInt(xLoseNo.getText().toString());
 
             TextView yWinNo = findViewById(R.id.yWinNo);
             TextView yLoseNo = findViewById(R.id.yLoseNo);
-            int yWinNoNumber = Integer.parseInt(yWinNo.getText().toString())+1;
-            int yLoseNoNumber = Integer.parseInt(yLoseNo.getText().toString())+1;
+            int yWinNoNumber = Integer.parseInt(yWinNo.getText().toString());
+            int yLoseNoNumber = Integer.parseInt(yLoseNo.getText().toString());
 
             if (role == PLAYER_X) {
                 roomRef.update("playerX", "");
