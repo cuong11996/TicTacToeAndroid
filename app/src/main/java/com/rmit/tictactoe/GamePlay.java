@@ -433,6 +433,7 @@ public class GamePlay extends AppCompatActivity {
         }
 
         finish();
+        startActivity(getIntent());
     }
 
 }
