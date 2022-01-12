@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,6 +89,7 @@ public class GamePlay extends AppCompatActivity {
 
         if (role == PLAYER_X) {
             ((ProgressBar) findViewById(R.id.progressBar)).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.progressText)).setVisibility(View.VISIBLE);
             Task<DocumentSnapshot> playerXProfile = db.collection("users").document(xEmail).get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -108,8 +110,15 @@ public class GamePlay extends AppCompatActivity {
                     }
                 }
             });
-
         }
+
+        ((ImageView) findViewById(R.id.homeIcon)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(getIntent());
+            }
+        });
 
         setVisible(R.id.popUpResult,false);
 
@@ -148,6 +157,7 @@ public class GamePlay extends AppCompatActivity {
                     }
 
                     ((ProgressBar) findViewById(R.id.progressBar)).setVisibility(View.INVISIBLE);
+                    ((TextView) findViewById(R.id.progressText)).setVisibility(View.INVISIBLE);
                     yEmail = newYEmail;
                     db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -429,7 +439,7 @@ public class GamePlay extends AppCompatActivity {
     @Override
     public void onBackPressed(){
 
-        if(xEmail != "" && yEmail != ""){
+        if(!xEmail.equals("") && !yEmail.equals("")){
             String userEmail = role == PLAYER_X ? xEmail : yEmail;
             DocumentReference userDocumentRef = db.collection("users").document(userEmail);
 
@@ -439,7 +449,8 @@ public class GamePlay extends AppCompatActivity {
             int xLoseNoNumber = Integer.parseInt(xLoseNo.getText().toString());
 
             TextView yWinNo = findViewById(R.id.yWinNo);
-            TextView yLoseNo = findViewById(R.id.yLoseNo);
+            TextView yLoseNo = findViewById(R.
+                    id.yLoseNo);
             int yWinNoNumber = Integer.parseInt(yWinNo.getText().toString());
             int yLoseNoNumber = Integer.parseInt(yLoseNo.getText().toString());
 
