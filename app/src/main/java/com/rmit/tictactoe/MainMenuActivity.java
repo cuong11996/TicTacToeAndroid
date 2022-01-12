@@ -103,7 +103,7 @@ public class MainMenuActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String playerX = (String) document.get("playerX");
                                 String playerY = (String) document.get("playerY");
-                                if (!playerX.equals("") && playerY.equals("")){
+                                if (!playerX.equals("") && playerY.equals("") && !playerX.equals(mAuth.getCurrentUser().getEmail())){
                                     setVisible(R.id.findMatchBtn,false);
                                     setVisible(R.id.confirmField,true);
 
