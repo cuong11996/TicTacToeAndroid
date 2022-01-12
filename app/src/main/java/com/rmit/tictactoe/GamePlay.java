@@ -90,8 +90,10 @@ public class GamePlay extends AppCompatActivity {
 
                     long[][] newArr = firebaseFlattenedTo2D((ArrayList<Long>) Objects.requireNonNull(currentData.get("game")));
                     String newYEmail = (String) currentData.get("yEmail");
+                    Log.i(TAG, "Received new YEmail " + newYEmail);
 
-                    if (newYEmail == null) {
+                    assert newYEmail != null;
+                    if (newYEmail.isEmpty()) {
                         return;
                     }
 
@@ -129,6 +131,8 @@ public class GamePlay extends AppCompatActivity {
                                         yLostNoText.setText(yLostNo);
                                     }
                                 }
+                            } else {
+                                Toast.makeText(GamePlay.this, "Fetch users failed", Toast.LENGTH_LONG).show();
                             }
                         }
                     });
