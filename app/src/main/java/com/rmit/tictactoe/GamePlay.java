@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,6 +86,31 @@ public class GamePlay extends AppCompatActivity {
         yEmail = intent.getStringExtra("yEmail");
         role = yEmail.isEmpty() ? PLAYER_X : PLAYER_O;
 
+        if (role == PLAYER_X) {
+            ((ProgressBar) findViewById(R.id.progressBar)).setVisibility(View.VISIBLE);
+            Task<DocumentSnapshot> playerXProfile = db.collection("users").document(xEmail).get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        String xUsername = (String) document.get("fullName");
+                        TextView xUsernameText = (TextView) findViewById(R.id.xUsername);
+                        xUsernameText.setText(xUsername);
+
+                        String xWinNo = (String) document.get("winNo");
+                        int xLostNo = (Integer.parseInt((String) document.get("matchNo")) - Integer.parseInt(xWinNo));
+
+                        TextView xWinNoText = (TextView) findViewById(R.id.xWinNo);
+                        TextView xLostNoText = (TextView) findViewById(R.id.xLoseNo);
+                        xWinNoText.setText(xWinNo);
+                        xLostNoText.setText(Integer.toString(xLostNo));
+                    }
+                }
+            });
+
+        }
+
         setVisible(R.id.popUpResult,false);
 
         isTurn = role == PLAYER_X;
@@ -121,6 +147,7 @@ public class GamePlay extends AppCompatActivity {
                         return;
                     }
 
+                    ((ProgressBar) findViewById(R.id.progressBar)).setVisibility(View.INVISIBLE);
                     yEmail = newYEmail;
                     db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
