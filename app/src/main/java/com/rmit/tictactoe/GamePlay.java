@@ -410,6 +410,7 @@ public class GamePlay extends AppCompatActivity {
             int yLoseNoNumber = Integer.parseInt(yLoseNo.getText().toString())+1;
 
             if (role == PLAYER_X) {
+                roomRef.update("playerX", "");
                 xLoseNoNumber += 1;
                 TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
                 updatedLoseNo.setText(Integer.toString(xLoseNoNumber));
@@ -417,6 +418,7 @@ public class GamePlay extends AppCompatActivity {
                 userDocumentRef.update("winNo", xWinNoNumber + "");
             }
             else {
+                roomRef.update("playerY", "");
                 yLoseNoNumber += 1;
                 TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
                 updatedLoseNo.setText(Integer.toString(yLoseNoNumber));
