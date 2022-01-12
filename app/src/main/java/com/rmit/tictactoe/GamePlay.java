@@ -326,6 +326,8 @@ public class GamePlay extends AppCompatActivity {
         TextView gameResultTxt = findViewById(R.id.gameResultTxt);
         gameResultTxt.setText("lost");
         updateInfo((int) -role);
+        TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
+        updatedLoseNo.setTextColor(getResources().getColor(R.color.design_default_color_error));
         Toast.makeText(this, "You lost!", Toast.LENGTH_LONG).show();
     }
 
@@ -335,6 +337,8 @@ public class GamePlay extends AppCompatActivity {
         gameResultTxt.setText("win");
         updateInfo((int) role);
         Toast.makeText(this, "You won!", Toast.LENGTH_LONG).show();
+        TextView updatedWinNo = findViewById(R.id.updatedWinNo);
+        updatedWinNo.setTextColor(getResources().getColor(R.color.design_default_color_error));
         roomRef.delete();
     }
 
