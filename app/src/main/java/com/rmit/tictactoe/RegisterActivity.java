@@ -90,6 +90,8 @@ public class RegisterActivity extends AppCompatActivity {
                             Map<String, Object> userMap = new HashMap<>();
                             userMap.put("fullName", fullName);
                             userMap.put("age", age);
+                            userMap.put("matchNo","0");
+                            userMap.put("winNo","0");
 
                             db.collection("users").document(email).set(userMap)
                                     .addOnSuccessListener(unused -> {
