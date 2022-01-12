@@ -39,6 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private TextView winNoTxt;
     private TextView loseNoTxt;
     private TextView matchNoTxt;
+    private TextView logout;
     private LinearLayout findMatchBtn;
     private LinearLayout confirmField;
 
@@ -56,6 +57,7 @@ public class MainMenuActivity extends AppCompatActivity {
         matchNoTxt = findViewById(R.id.matchNoTxt);
         findMatchBtn = findViewById(R.id.findMatchBtn);
         confirmField = findViewById(R.id.confirmField);
+        logout = findViewById(R.id.logoutBtn);
 
 
         setVisible(R.id.findMatchBtn,true);
@@ -88,6 +90,14 @@ public class MainMenuActivity extends AppCompatActivity {
                 } else {
                     Log.d("Check get data", "get failed with ", task.getException());
                 }
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                finish();
             }
         });
 

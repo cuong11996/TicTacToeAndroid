@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.ipsec.ike.exceptions.IkeNetworkLostException;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -267,6 +269,7 @@ public class GamePlay extends AppCompatActivity {
 
 
     private void updateInfo(boolean isLose){
+
         TextView xWinNo = findViewById(R.id.xWinNo);
         TextView xLoseNo = findViewById(R.id.xLoseNo);
         int xWinNoNumber = Integer.parseInt(xWinNo.getText().toString())+1;
@@ -388,4 +391,41 @@ public class GamePlay extends AppCompatActivity {
 
         return EMPTY;
     }
+
+    @Override
+    public void onBackPressed(){
+
+        if(xEmail != "" && yEmail != ""){
+            String userEmail = role == PLAYER_X ? xEmail : yEmail;
+            DocumentReference userDocumentRef = db.collection("users").document(userEmail);
+
+            TextView xWinNo = findViewById(R.id.xWinNo);
+            TextView xLoseNo = findViewById(R.id.xLoseNo);
+            int xWinNoNumber = Integer.parseInt(xWinNo.getText().toString())+1;
+            int xLoseNoNumber = Integer.parseInt(xLoseNo.getText().toString())+1;
+
+            TextView yWinNo = findViewById(R.id.yWinNo);
+            TextView yLoseNo = findViewById(R.id.yLoseNo);
+            int yWinNoNumber = Integer.parseInt(yWinNo.getText().toString())+1;
+            int yLoseNoNumber = Integer.parseInt(yLoseNo.getText().toString())+1;
+
+            if (role == PLAYER_X) {
+                xLoseNoNumber += 1;
+                TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
+                updatedLoseNo.setText(Integer.toString(xLoseNoNumber));
+                userDocumentRef.update("matchNo", (xLoseNoNumber + xWinNoNumber) + "");
+                userDocumentRef.update("winNo", xWinNoNumber + "");
+            }
+            else {
+                yLoseNoNumber += 1;
+                TextView updatedLoseNo = findViewById(R.id.updatedLoseNo);
+                updatedLoseNo.setText(Integer.toString(yLoseNoNumber));
+                userDocumentRef.update("matchNo", (yLoseNoNumber + yWinNoNumber) + "");
+                userDocumentRef.update("winNo", yWinNoNumber + "");
+            }
+        }
+
+        finish();
+    }
+
 }
