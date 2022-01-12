@@ -175,9 +175,24 @@ public class GamePlay extends AppCompatActivity {
             } else {
                 isTurn = true;
             }
+
+            int winner = getWinner();
+            if (winner == role) handleWin();
+            else if (winner == -role) handleLose();
+
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    private void handleLose() {
+        Toast.makeText(this, "You lost!", Toast.LENGTH_LONG).show();
+    }
+
+
+    private void handleWin() {
+        Toast.makeText(this, "You won!", Toast.LENGTH_LONG).show();
     }
 
 
@@ -200,5 +215,32 @@ public class GamePlay extends AppCompatActivity {
         }
 
         return res;
+    }
+
+
+    private int getWinner() {
+        // Horizontal
+        for (int row = 0; row < SIZE; row++) {
+            long rowSum = arr[row][0] + arr[row][1] + arr[row][2];
+            if (rowSum == 3 * PLAYER_X) return PLAYER_X;
+            if (rowSum == 3 * PLAYER_O) return PLAYER_O;
+        }
+
+        // Vertical
+        for (int column = 0; column < SIZE; column++) {
+            long columnSum = arr[0][column] + arr[1][column] + arr[2][column];
+            if (columnSum == 3 * PLAYER_X) return PLAYER_X;
+            if (columnSum == 3 * PLAYER_O) return PLAYER_O;
+        }
+
+        long mainDiagonalSum = arr[0][0] + arr[1][1] + arr[2][2];
+        if (mainDiagonalSum == 3 * PLAYER_X) return PLAYER_X;
+        if (mainDiagonalSum == 3 * PLAYER_O) return PLAYER_O;
+
+        long secondaryDiagonalSum = arr[2][0] + arr[1][1] + arr[0][2];
+        if (secondaryDiagonalSum == 3 * PLAYER_X) return PLAYER_X;
+        if (secondaryDiagonalSum == 3 * PLAYER_O) return PLAYER_O;
+
+        return EMPTY;
     }
 }
