@@ -24,7 +24,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/xUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -43,7 +43,7 @@
                 android:layout_height="35dp"
                 android:layout_marginStart="7dp"
                 android:layout_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintStart_toEndOf="@+id/xUsername"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/close" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -62,7 +62,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/xWinNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -86,7 +86,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/xLoseNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
@@ -132,7 +132,7 @@
                 app:srcCompat="@drawable/circle" />
 
             <TextView
-                android:id="@+id/username2"
+                android:id="@+id/yUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
@@ -163,7 +163,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:id="@+id/winNo2"
+                    android:id="@+id/yWinNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2"
@@ -185,7 +185,7 @@
                     android:textSize="30sp" />
 
                 <TextView
-                    android:id="@+id/loseNo2"
+                    android:id="@+id/yLoseNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"

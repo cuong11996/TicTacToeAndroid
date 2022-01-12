@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -92,6 +94,44 @@ public class GamePlay extends AppCompatActivity {
                     if (newYEmail == null) {
                         return;
                     }
+
+                    db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document: task.getResult()) {
+                                    if (document.getId().equals(xEmail)) {
+                                        String xUsername = (String) document.get("fullName");
+                                        TextView xUsernameText = (TextView) findViewById(R.id.xUsername);
+                                        xUsernameText.setText(xUsername);
+
+                                        String xWinNo = (String) document.get("winNo");
+                                        int xLostNo = (Integer.parseInt((String) document.get("matchNo")) - Integer.parseInt(xWinNo));
+
+                                        TextView xWinNoText = (TextView) findViewById(R.id.xWinNo);
+                                        TextView xLostNoText = (TextView) findViewById(R.id.xLoseNo);
+                                        xWinNoText.setText(xWinNo);
+                                        xLostNoText.setText(xLostNo);
+                                    }
+
+                                    if (document.getId().equals(yEmail)) {
+                                        String yUsername = (String) document.get("fullName");
+                                        TextView yUsernameText = (TextView) findViewById(R.id.yUsername);
+                                        yUsernameText.setText(yUsername);
+
+                                        String yWinNo = (String) document.get("winNo");
+                                        int yLostNo = (Integer.parseInt((String) document.get("matchNo")) - Integer.parseInt(yWinNo));
+
+                                        TextView yWinNoText = (TextView) findViewById(R.id.yWinNo);
+                                        TextView yLostNoText = (TextView) findViewById(R.id.yLoseNo);
+                                        yWinNoText.setText(yWinNo);
+                                        yLostNoText.setText(yLostNo);
+                                    }
+                                }
+                            }
+                        }
+                    });
+
 
                     yEmail = newYEmail;
                     // TODO: Update user data
