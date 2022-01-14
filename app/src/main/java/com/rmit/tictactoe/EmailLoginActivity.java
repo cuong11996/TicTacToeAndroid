@@ -1,9 +1,15 @@
 package com.rmit.tictactoe;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -25,6 +31,41 @@ public class EmailLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        registerReceiver(wifiStateReceiver,intentFilter);
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        unregisterReceiver(wifiStateReceiver);
+    }
+    private BroadcastReceiver wifiStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int wifiStateExtra = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_UNKNOWN);
+            switch (wifiStateExtra){
+                case WifiManager.WIFI_STATE_ENABLED:
+                    Toast.makeText(EmailLoginActivity.this,"WIFI IS ON",Toast.LENGTH_LONG).show();
+                    break;
+                case WifiManager.WIFI_STATE_DISABLED:
+                    Toast.makeText(EmailLoginActivity.this,"WIFI IS OFF",Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EmailLoginActivity.this);
+                    alertDialogBuilder
+                            .setTitle("Warning!!")
+                            .setMessage("You need to check the wifi connection")
+                            .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            }).create().show();
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
